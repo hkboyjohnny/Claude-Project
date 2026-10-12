@@ -5,7 +5,7 @@ Peer comparison of Sinochem Holdings' Energy, Agriculture and Rubber businesses 
 | File | What it is |
 |---|---|
 | `Sinochem_Peer_Comparison_Report.md` | Written report: performance commentary and peer-comparison conclusions per sector |
-| `Sinochem_Peer_Comparison.xlsx` | Workbook: scorecard, sector matrices (live formulas), H1 2026 momentum, group context, standardised inputs, FX, sources |
+| `Sinochem_Peer_Comparison.xlsx` | Workbook: **Position** (editable one-glance ranking tables), scorecard, sector matrices (live formulas), H1 2026 momentum, group context, standardised inputs, FX, sources |
 | `charts/` | One positioning chart per sector (EBITDA margin, EBITDA/assets, leverage) |
 | `scripts/` | Fetch, standardise and rebuild pipeline (`scripts/run_all.sh`) |
 | `data/` | `dataset.json` (standardised inputs), `layout.json`, and `raw/` (statements as fetched) |

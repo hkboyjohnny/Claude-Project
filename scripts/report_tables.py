@@ -51,6 +51,30 @@ def scorecard_summary():
     return "\n".join(out)
 
 
+def position_tables():
+    ws = wb["Position"]
+    blocks, cur = [], None
+    for r in range(4, ws.max_row + 1):
+        a = ws.cell(row=r, column=1).value
+        n = ws.cell(row=r, column=3).value
+        if a and ws.cell(row=r, column=2).value is None and n is None and a.startswith(("ENERGY", "AGRICULTURE", "RUBBER")):
+            cur = dict(title=a, rows=[]); blocks.append(cur)
+        elif a and isinstance(n, int):
+            g = lambda c: ws.cell(row=r, column=c).value  # noqa: E731
+            rk = lambda c: f"{g(c)} of {n}" if isinstance(g(c), (int, float)) else "n/a"
+            pct = g(15)
+            cur["rows"].append(f"| {a} | {g(2)} (n={n}) | {g(4):,.1f} | {rk(5)} | {fmt(g(7), 'p')} ({rk(8)}) | {fmt(g(9), 'p')} ({rk(10)}) | {fmt(g(11), 'x')} ({rk(12)}) | "
+                               f"{fmt(g(13), 'p')} ({rk(14)}) | **{g(16)}** ({pct * 100:.0f}%) | {g(17)} |")
+    out = []
+    for b in blocks:
+        out.append(f"**{b['title']}**\n")
+        out.append("| Sinochem entity | Compared with | Revenue (USD bn) | Size rank | EBITDA margin (rank) | ROE (rank) | Net debt/EBITDA (rank) | FCF margin (rank) | Operating position (percentile) | Market standing (public sources) |")
+        out.append("|---|---|---:|:---:|---|---|---|---|---|---|")
+        out.extend(b["rows"])
+        out.append("")
+    return "\n".join(out)
+
+
 STATS = {"Energy": ("Peer median - all peers", "Peer median - State-owned majors", "Peer median - Private integrated refiners"),
          "Agriculture": ("Peer median - Crop-protection & seeds peers", "Peer median - Crop-nutrition peers"),
          "Rubber": ("Peer median - all peers", "Peer median - Global majors", "Peer median - China tyre producers")}

@@ -314,6 +314,7 @@ for j, h in enumerate(hdr, 1):
     c = sc.cell(row=4, column=j, value=h)
     c.font, c.fill, c.alignment, c.border = f_hdr, fill_hdr, ctr, box
 r = 5
+SC_ROW = {}
 name_of = {m[0]: m[1] for m in METRICS}
 dir_of = {m[0]: m[4] for m in METRICS}
 fmt_of = {m[0]: m[3] for m in METRICS}
@@ -324,6 +325,7 @@ for key, (sector, sub) in SC_PEERS.items():
     ent_row = lay["rows"][key]
     start = r
     for mk in SC_METRICS:
+        SC_ROW[(key, mk)] = r
         col = L(lay["mcol"][mk])
         rng = f"'{sector}'!{col}{a}:{col}{b}"
         ent = f"'{sector}'!{col}{ent_row}"
@@ -360,6 +362,131 @@ sc.conditional_formatting.add(rng, FormulaRule(formula=['LEFT(I5,12)="Bottom thi
 sc.freeze_panes = "A5"
 for col, w in zip("ABCDEFGHI", [32, 28, 32, 12, 12, 14, 7, 7, 18]):
     sc.column_dimensions[col].width = w
+
+# ----------------------------------------------------------------------------------------------------------------------- Position (at a glance)
+ps = wb.create_sheet("Position", 1)
+ps["A1"], ps["A1"].font = "Sinochem's position at a glance (FY2025)", f_title
+ps["A2"] = ("Rank 1 = best among the Sinochem entity plus its listed peers (n = entity + peers). Size rank is by FY2025 revenue (USD) within this peer set, not global market share - global standing is in the "
+            "'Market standing' column (public sources, editable). Ranks and values are live formulas from the sector sheets; text columns are free to edit. Leverage rank: lower net debt/EBITDA = better.")
+ps["A2"].font = f_sub
+ps["A2"].alignment = Alignment(wrap_text=True, vertical="top")
+ps.merge_cells("A2:R2")
+ps.row_dimensions[2].height = 42
+POS_HDR = ["Sinochem entity", "Compared with", "n", "Revenue (USD bn)", "Size rank (revenue)", "Growth rank (revenue)", "EBITDA margin", "Rank", "ROE", "Rank",
+           "Net debt / EBITDA", "Rank", "FCF margin", "Rank", "Operating percentile (avg of 9 scorecard ranks)", "Operating position", "Market standing (public sources)", "What drives the position"]
+HELP_HDR = [f"helper: {m}" for m in ("growth", "EBITDA m", "net m", "ROE", "EBITDA/A", "leverage", "int cover", "cash conv", "FCF m")]
+POS_TEXT = {
+    "SCE": ("One of five Chinese state oil traders with crude-import trading qualification and one of five with product-export quota (rating agency); 15 mt/y refining capacity. "
+            "Revenue about USD 55bn: 3rd of 6 in this set, behind Sinopec and PetroChina.",
+            "Thin trading/wholesale mix, falling petrochemical margin, interest above EBIT; net debt/EBITDA 4.5x vs 2.2x median. Cash flow flattered by working-capital release."),
+    "SYN": ("Largest global crop-protection company by 2024 sales (USD 13.3bn, AgroPages Top 20, ahead of Bayer 11.1bn, BASF 8.3bn, Corteva 7.4bn). Seeds: among the top few, but published rankings vary (not verified).",
+            "Franchise intact (gross margin 39.5%); reported profit hit by USD 792m litigation, USD 225m restructuring, interest and tax. Net debt/EBITDA 4.7x reported, about 3.2x excluding the two items."),
+    "ADM": ("Describes itself as the leading off-patent crop-protection company. Sales USD 4.1bn put it roughly 5th to 8th globally on 2024 AgroPages data (UPL 5th at USD 4.3bn, Sumitomo 8th at USD 3.0bn); exact rank not confirmed.",
+            "Turnaround under way: EBITDA +96%, gross margin +3.4 points, but still a net loss; leverage 4.1x; H1 2026 net profit RMB 433m vs a loss a year earlier."),
+    "YNG": ("Syngenta Group's listed Chinese active-ingredient producer. Press summaries of the 2025 report cite technical AI output of 113.8 kt (+17.4%) and international sales of RMB 6.8bn (+15%); global rank not verified.",
+            "Highest margin and returns in the Sinochem agriculture group, net cash; top third on 7 of 9 scorecard metrics."),
+    "SIF": ("Hong Kong-listed crop-nutrition distributor and producer (revenue RMB 23.3bn). Domestic market share not verified. Transferred out of Syngenta Group to Sinochem Hong Kong on 23 Dec 2025.",
+            "Distribution model: EBITDA margin 8.5% vs 21.8% for crop-nutrition peers, but ROE 11.5% and net cash."),
+    "PIR": ("5th-largest global tyre maker by sales (European Rubber Journal Global Tire Report 2025 on 2024 sales; Tyrepress 2025-sales ranking also 5th), behind Michelin, Bridgestone, Goodyear and Continental. "
+            "Sinochem holds about 34.1% via Marco Polo International Italy; Pirelli's accounts say no entity controls it.",
+            "Best EBITDA margin (21.6%) and highest FCF margin in the set, High Value 79% of sales; revenue flat, so growth rank is low. Interest cover looks weak only because finance expense includes FX."),
+    "AEO": ("Chinese truck/bus radial tyre maker (ChemChina line); revenue RMB 7.4bn, about one-sixth of Zhongce's. Global rank not verified.",
+            "Margin well below Chinese peers (EBITDA 8.1% vs 12.5-18.1%), offset by low leverage (0.4x) and +10.5% revenue growth."),
+}
+POS_ROWS = [("Energy", ["SCE"], None), ("Agriculture", ["SYN", "ADM", "YNG"], "Crop-protection & seeds peers"), ("Agriculture", ["SIF"], "Crop-nutrition peers"), ("Rubber", ["PIR", "AEO"], None)]
+POS_TITLES = {("Energy", "SCE"): "ENERGY", ("Agriculture", "SYN"): "AGRICULTURE - crop protection & seeds", ("Agriculture", "SIF"): "AGRICULTURE - crop nutrition", ("Rubber", "PIR"): "RUBBER & TYRES"}
+POSITION_LAYOUT = {}
+r = 4
+for sector, keys, sub in POS_ROWS:
+    lay = LAYOUT[sector]
+    a, b = (lay["first_peer"], lay["last_peer"]) if sub is None else lay["subs"][sub]
+    t = ps.cell(row=r, column=1, value=POS_TITLES[(sector, keys[0])])
+    t.font = Font(name="Calibri", size=11, bold=True, color="FFFFFF")
+    for j in range(1, 19):
+        ps.cell(row=r, column=j).fill = fill_grp
+    r += 1
+    for j, h in enumerate(POS_HDR, 1):
+        c = ps.cell(row=r, column=j, value=h)
+        c.font, c.fill, c.alignment, c.border = f_hdr, fill_hdr, ctr, box
+    for j, h in enumerate(HELP_HDR, 19):
+        c = ps.cell(row=r, column=j, value=h)
+        c.font, c.alignment = Font(name="Calibri", size=8, color="808080"), ctr
+    ps.row_dimensions[r].height = 52
+    r += 1
+    first = r
+    for key in keys:
+        er = lay["rows"][key]
+        mc = lay["mcol"]
+        col = lambda mk: L(mc[mk])  # noqa: E731
+        rng = lambda mk: f"'{sector}'!{col(mk)}{a}:{col(mk)}{b}"  # noqa: E731
+        ent = lambda mk: f"'{sector}'!{col(mk)}{er}"  # noqa: E731
+        ps.cell(row=r, column=1, value=ENT[key]["name"]).font = f_bold
+        ps.cell(row=r, column=2, value="All listed peers" if sub is None else sub)
+        ps.cell(row=r, column=3, value=f"=1+COUNT({rng('rev_usd')})")
+        ps.cell(row=r, column=4, value=f"={ent('rev_usd')}").number_format = "#,##0.0"
+        rank = lambda mk, better: f'=IF(ISNUMBER({ent(mk)}),1+COUNTIF({rng(mk)},"{better}"&{ent(mk)}),"n/a")'  # noqa: E731
+        ps.cell(row=r, column=5, value=rank("rev_usd", ">"))
+        ps.cell(row=r, column=6, value=rank("g_rev", ">"))
+        ps.cell(row=r, column=7, value=f"={ent('m_ebitda')}").number_format = "0.0%"
+        ps.cell(row=r, column=8, value=rank("m_ebitda", ">"))
+        ps.cell(row=r, column=9, value=f"={ent('roe')}").number_format = "0.0%"
+        ps.cell(row=r, column=10, value=rank("roe", ">"))
+        ps.cell(row=r, column=11, value=f"={ent('nd_ebitda')}").number_format = '0.0"x"'
+        ps.cell(row=r, column=12, value=rank("nd_ebitda", "<"))
+        ps.cell(row=r, column=13, value=f"={ent('fcf_m')}").number_format = "0.0%"
+        ps.cell(row=r, column=14, value=rank("fcf_m", ">"))
+        for hj, mk in zip(range(19, 28), SC_METRICS):
+            sr = SC_ROW[(key, mk)]
+            hc = ps.cell(row=r, column=hj, value=f'=IF(ISNUMBER(Scorecard!G{sr}),(Scorecard!H{sr}-Scorecard!G{sr})/(Scorecard!H{sr}-1),"")')
+            hc.number_format, hc.font = "0%", Font(name="Calibri", size=8, color="808080")
+        ps.cell(row=r, column=15, value=f'=IFERROR(AVERAGE(S{r}:AA{r}),"n/a")').number_format = "0%"
+        ps.cell(row=r, column=16, value=f'=IF(ISNUMBER(O{r}),IF(O{r}>=0.8,"Leader",IF(O{r}>=0.6,"Upper half",IF(O{r}>=0.4,"Middle",IF(O{r}>=0.2,"Lower half","Laggard")))),"n/a")')
+        ps.cell(row=r, column=17, value=POS_TEXT[key][0])
+        ps.cell(row=r, column=18, value=POS_TEXT[key][1])
+        for j in range(1, 19):
+            c = ps.cell(row=r, column=j)
+            c.border = box
+            if j in (1,):
+                c.fill = fill_sin
+            if j in (2, 17, 18):
+                c.alignment = Alignment(wrap_text=True, vertical="top")
+                c.font = f_calc if j != 1 else f_bold
+            elif j == 1:
+                c.alignment = Alignment(wrap_text=True, vertical="top")
+            else:
+                c.alignment = Alignment(horizontal="center", vertical="top")
+                if j != 1:
+                    c.font = f_calc
+        ps.cell(row=r, column=16).font = f_bold
+        ps.row_dimensions[r].height = 68
+        POSITION_LAYOUT[key] = r
+        r += 1
+    last = r - 1
+    for rc in ("E", "F", "H", "J", "L", "N"):
+        rg = f"{rc}{first}:{rc}{last}"
+        ps.conditional_formatting.add(rg, FormulaRule(formula=[f'AND(ISNUMBER({rc}{first}),($C{first}-{rc}{first})/($C{first}-1)>=0.67)'],
+                                                     font=Font(color="1B7F3B", bold=True), fill=PatternFill(start_color="DFF0E3", end_color="DFF0E3", fill_type="solid")))
+        ps.conditional_formatting.add(rg, FormulaRule(formula=[f'AND(ISNUMBER({rc}{first}),($C{first}-{rc}{first})/($C{first}-1)<=0.33)'],
+                                                     font=Font(color="C0392B", bold=True), fill=PatternFill(start_color="F8DCD8", end_color="F8DCD8", fill_type="solid")))
+    rg = f"P{first}:P{last}"
+    ps.conditional_formatting.add(rg, FormulaRule(formula=[f'OR(P{first}="Leader",P{first}="Upper half")'], font=Font(color="1B7F3B", bold=True), fill=PatternFill(start_color="DFF0E3", end_color="DFF0E3", fill_type="solid")))
+    ps.conditional_formatting.add(rg, FormulaRule(formula=[f'OR(P{first}="Lower half",P{first}="Laggard")'], font=Font(color="C0392B", bold=True), fill=PatternFill(start_color="F8DCD8", end_color="F8DCD8", fill_type="solid")))
+    r += 1
+notes = [
+    "Operating position = average percentile of the nine Scorecard ranks (revenue growth, EBITDA margin, net margin, ROE, EBITDA/assets, leverage, interest cover, cash conversion, FCF margin): Leader >= 80%, Upper half 60-79%, Middle 40-59%, Lower half 20-39%, Laggard < 20%. Green/red rank cells = top/bottom third. The six columns shown are the headline subset.",
+    "Market standing sources: AgroPages 2024 Global Top 20 Crop Protection Companies (https://news.agropages.com/News/NewsDetail---54977.htm); European Rubber Journal Global Tire Report 2025; Tyrepress ranking of leading tyre manufacturers (2025 sales);",
+    "rating agency report on Sinochem Corp (SSE, 2026-06-23) for Sinochem Energy's trading qualifications; ADAMA company profile; press summaries of Yangnong's 2025 annual report. Global ranks marked 'not verified' could not be confirmed from a reliable public source.",
+]
+for n in notes:
+    c = ps.cell(row=r, column=1, value=n)
+    c.font = f_sub
+    r += 1
+ps.freeze_panes = "B4"
+ps.print_area = f"A1:R{r}"
+for col, w in zip("ABCDEFGHIJKLMNOPQR", [26, 22, 5, 10, 10, 10, 10, 7, 9, 7, 10, 7, 9, 7, 13, 12, 56, 50]):
+    ps.column_dimensions[col].width = w
+for col in ["S", "T", "U", "V", "W", "X", "Y", "Z", "AA"]:
+    ps.column_dimensions[col].width = 9
 
 # ----------------------------------------------------------------------------------------------------------------------- Interim
 it = wb.create_sheet("H1-2026 momentum")
@@ -459,6 +586,7 @@ lines = [
     ("Prepared 12 Oct 2026. Basis: fiscal year ended 31 Dec 2025 (audited / filed), with H1 2026 momentum where available.", f_sub),
     ("", None),
     ("How to read this workbook", f_bold),
+    ("Position - one-glance table per sector: size rank, operating ranks, overall position and public market standing (editable; ranks are live formulas).", None),
     ("Scorecard - rank of each Sinochem entity against its peer group on nine headline metrics (live formulas).", None),
     ("Energy / Agriculture / Rubber - full ratio matrices, peer median/high/low, sub-group medians, and anchor-minus-median row (green = better, red = worse).", None),
     ("H1-2026 momentum - first-half 2026 vs first-half 2025 revenue and net income.", None),
@@ -513,6 +641,9 @@ src_rows = [
     ("SEC EDGAR XBRL company facts (Corteva, FMC, Mosaic, Goodyear)", "https://data.sec.gov/api/xbrl/companyfacts/"),
     ("Eastmoney F10 financial statements (A-shares, Sinofert, US balance/income)", "https://datacenter.eastmoney.com/securities/api/data/v1/get"),
     ("IRS yearly average exchange rates", "https://www.irs.gov/individuals/international-taxpayers/yearly-average-currency-exchange-rates"),
+    ("AgroPages 2024 Global Top 20 Crop Protection Companies", "https://news.agropages.com/News/NewsDetail---54977.htm"),
+    ("European Rubber Journal Global Tire Report 2025", "https://european-rubber-journal.com/article/2098437/global-tire-report-2025-staying-on-top-but-in-a-lower-gear"),
+    ("Tyrepress leading tyre manufacturers ranking", "https://www.tyrepress.com/author/andrew_bogie/"),
     ("Sinochem International sale of 36% of Halcyon Agri to Hainan Rubber (Nov 2022)", "https://www.stcn.com/article/detail/733704.html"),
     ("Michelin H1 2026 results", "https://www.michelin.com/en/publications/group/financial-information-at-june-30-2026"),
 ]
@@ -528,7 +659,7 @@ for _ws in wb.worksheets:
     _ws.sheet_properties.pageSetUpPr.fitToPage = True
     _ws.sheet_view.showGridLines = False
 
-wb._sheets = [wb[n] for n in ["README", "Scorecard", "Energy", "Agriculture", "Rubber", "H1-2026 momentum", "Group context", "Data", "FX", "Sources"]]
+wb._sheets = [wb[n] for n in ["README", "Position", "Scorecard", "Energy", "Agriculture", "Rubber", "H1-2026 momentum", "Group context", "Data", "FX", "Sources"]]
 out = ROOT / "Sinochem_Peer_Comparison.xlsx"
 wb.save(out)
 print("saved", out)

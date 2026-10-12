@@ -18,7 +18,41 @@ Three things cut across the sectors:
 - **FY2025 predates the 2026 refining upturn, and Sinochem's share of it is unclear.** In H1 2026 Sinopec's net profit rose 19%, PetroChina's 22%, and Hengli's more than doubled; Sinochem Energy has no H1 2026 statement I could find, and it cut refinery run rates in Q1 2026.
 - **Reported profit overstates operating strength at group level.** For Sinochem Corp in FY2025, investment income plus fair-value gains were RMB 11.6bn against RMB 1.4bn of operating business profit.
 
-## 2. How I framed "Sinochem" and the peer sets
+## 2. Position at a glance
+
+Rank 1 = best among the Sinochem entity plus its listed peers (n). *Size rank* is by FY2025 revenue within this peer set, not global market share; global standing is in the last column, from public sources. *Operating position* averages the entity's percentile across the nine scorecard metrics (Leader ≥80%, Upper half 60–79%, Middle 40–59%, Lower half 20–39%, Laggard <20%). The same tables are in the workbook's **Position** sheet, where the ranks are live formulas and the text columns are editable.
+
+**ENERGY**
+
+| Sinochem entity | Compared with | Revenue (USD bn) | Size rank | EBITDA margin (rank) | ROE (rank) | Net debt/EBITDA (rank) | FCF margin (rank) | Operating position (percentile) | Market standing (public sources) |
+|---|---|---:|:---:|---|---|---|---|---|---|
+| Sinochem Energy (中化能源) | All listed peers (n=6) | 55.3 | 3 of 6 | 1.3% (6 of 6) | -4.5% (5 of 6) | 4.5x (4 of 6) | 1.3% (3 of 6) | **Lower half** (33%) | One of five Chinese state oil traders with crude-import trading qualification and one of five with product-export quota (rating agency); 15 mt/y refining capacity. Revenue about USD 55bn: 3rd of 6 in this set, behind Sinopec and PetroChina. |
+
+**AGRICULTURE - crop protection & seeds**
+
+| Sinochem entity | Compared with | Revenue (USD bn) | Size rank | EBITDA margin (rank) | ROE (rank) | Net debt/EBITDA (rank) | FCF margin (rank) | Operating position (percentile) | Market standing (public sources) |
+|---|---|---:|:---:|---|---|---|---|---|---|
+| Syngenta AG (global CP + Seeds) | Crop-protection & seeds peers (n=5) | 17.0 | 2 of 5 | 12.4% (4 of 5) | -2.1% (4 of 5) | 4.7x (4 of 5) | 1.8% (3 of 5) | **Lower half** (30%) | Largest global crop-protection company by 2024 sales (USD 13.3bn, AgroPages Top 20, ahead of Bayer 11.1bn, BASF 8.3bn, Corteva 7.4bn). Seeds: among the top few, but published rankings vary (not verified). |
+| ADAMA | Crop-protection & seeds peers (n=5) | 4.1 | 2 of 5 | 11.9% (4 of 5) | -5.7% (4 of 5) | 4.1x (4 of 5) | 9.8% (2 of 5) | **Lower half** (36%) | Describes itself as the leading off-patent crop-protection company. Sales USD 4.1bn put it roughly 5th to 8th globally on 2024 AgroPages data (UPL 5th at USD 4.3bn, Sumitomo 8th at USD 3.0bn); exact rank not confirmed. |
+| Yangnong Chemical | Crop-protection & seeds peers (n=5) | 1.7 | 3 of 5 | 25.8% (1 of 5) | 11.7% (2 of 5) | -0.1x (2 of 5) | 10.6% (2 of 5) | **Leader** (84%) | Syngenta Group's listed Chinese active-ingredient producer. Press summaries of the 2025 report cite technical AI output of 113.8 kt (+17.4%) and international sales of RMB 6.8bn (+15%); global rank not verified. |
+
+**AGRICULTURE - crop nutrition**
+
+| Sinochem entity | Compared with | Revenue (USD bn) | Size rank | EBITDA margin (rank) | ROE (rank) | Net debt/EBITDA (rank) | FCF margin (rank) | Operating position (percentile) | Market standing (public sources) |
+|---|---|---:|:---:|---|---|---|---|---|---|
+| Sinofert | Crop-nutrition peers (n=5) | 3.3 | 4 of 5 | 8.5% (5 of 5) | 11.5% (3 of 5) | -0.7x (2 of 5) | 7.1% (4 of 5) | **Middle** (50%) | Hong Kong-listed crop-nutrition distributor and producer (revenue RMB 23.3bn). Domestic market share not verified. Transferred out of Syngenta Group to Sinochem Hong Kong on 23 Dec 2025. |
+
+**RUBBER & TYRES**
+
+| Sinochem entity | Compared with | Revenue (USD bn) | Size rank | EBITDA margin (rank) | ROE (rank) | Net debt/EBITDA (rank) | FCF margin (rank) | Operating position (percentile) | Market standing (public sources) |
+|---|---|---:|:---:|---|---|---|---|---|---|
+| Pirelli | All listed peers (n=8) | 7.6 | 4 of 8 | 21.6% (1 of 8) | 8.6% (5 of 8) | 1.0x (3 of 8) | 13.7% (1 of 8) | **Upper half** (62%) | 5th-largest global tyre maker by sales (European Rubber Journal Global Tire Report 2025 on 2024 sales; Tyrepress 2025-sales ranking also 5th), behind Michelin, Bridgestone, Goodyear and Continental. Sinochem holds about 34.1% via Marco Polo International Italy; Pirelli's accounts say no entity controls it. |
+| Aeolus Tyre (风神股份) | All listed peers (n=8) | 1.0 | 8 of 8 | 8.1% (6 of 8) | 6.9% (5 of 8) | 0.4x (2 of 8) | 1.2% (4 of 8) | **Middle** (52%) | Chinese truck/bus radial tyre maker (ChemChina line); revenue RMB 7.4bn, about one-sixth of Zhongce's. Global rank not verified. |
+
+
+By sector the average operating percentile is Rubber 57% (Pirelli 62%, Aeolus 52%), Agriculture 50% (Yangnong 84%, Sinofert 50%, ADAMA 36%, Syngenta AG 30%), Energy 33%. In short: **Sinochem holds top-five global positions in tyres (Pirelli, 5th) and crop protection (Syngenta, 1st); operationally it is performing well in tyres and is mixed in crop protection, while its energy arm is a mid-sized state oil trader and the weakest of its peer set on operations.**
+
+## 3. How I framed "Sinochem" and the peer sets
 
 | Sector | Sinochem entities used | Listed peers | Left out, and why |
 |---|---|---|---|
@@ -40,7 +74,7 @@ Two structural facts shape the framing. Agriculture and rubber/tyres sit in the 
 | Pirelli | All listed peers | 4 | 4 | 1 | 21.6% (15.5%) | 1.0x (1.1x) | 13.7% (0.9%) |
 | Aeolus Tyre (风神股份) | All listed peers | 2 | 5 | 2 | 8.1% (15.5%) | 0.4x (1.1x) | 1.2% (0.9%) |
 
-## 3. Energy
+## 4. Energy
 
 *Table key (all matrices): Rev g = FY25 revenue growth; GM = gross margin; EBITDA m = EBITDA margin; Net m = net margin; ROE = net income / average equity; EBITDA/A = EBITDA / average assets; ND/EBITDA = net debt / EBITDA; Int cover = EBIT / interest expense; Curr = current ratio; OCF/EBITDA = cash conversion; FCF m = (operating cash flow − capex) / revenue. Peer medians exclude Sinochem entities.*
 
@@ -75,7 +109,7 @@ Two structural facts shape the framing. Agriculture and rubber/tyres sit in the 
 
 **What changes the 2026 picture.** Peers' H1 2026 profits jumped with crude prices (Sinopec parent net profit +19%, PetroChina +22%, Hengli RMB 7.2bn vs RMB 3.1bn, Rongsheng RMB 9.3bn vs RMB 1.7bn, both net income before minorities; Sinopec Shanghai back in profit). At Sinochem Corp, Q1 2026 total profit rose to RMB 4.2bn from RMB 1.1bn, but RMB 2.8bn of that was fair-value gains (mostly the Salt Lake stake); operating business profit was RMB 0.54bn vs RMB 0.52bn. The rating agency also notes the company deliberately cut refinery run rates in Q1 2026. My inference is that Sinochem Energy will participate less in the refining upcycle than throughput-heavy peers; its H1 2026 statements will test this.
 
-## 4. Agriculture
+## 5. Agriculture
 
 ![Agriculture positioning](charts/agriculture_positioning.png)
 
@@ -112,7 +146,7 @@ Two structural facts shape the framing. Agriculture and rubber/tyres sit in the 
 4. **FMC shows the downside case** (USD 2.2bn net loss, negative EBITDA, revenue −18%); it is why the CP/seeds medians are best read alongside Corteva.
 5. **Scale:** Syngenta Group's sales of USD 28.4bn exceed Corteva (USD 17.4bn) and Nutrien (USD 26.9bn), but its margins and returns on reported numbers do not.
 
-## 5. Rubber
+## 6. Rubber
 
 ![Rubber positioning](charts/rubber_positioning.png)
 
@@ -145,7 +179,7 @@ Two structural facts shape the framing. Agriculture and rubber/tyres sit in the 
 5. **Control is the main caveat for Pirelli.** Following Italy's 2023 golden-power decree, Pirelli's board approved accounts in April 2025 (9 of 15 directors in favour) stating that Sinochem, through Marco Polo International Italy, no longer controls Pirelli under IFRS 10 and that no entity does; directors representing Sinochem voted against. After the December 2025 bond conversion Sinochem holds about 34.1% (from about 37%), MTP S.p.A. (Camfin and affiliates) about 25.3%, and the free float about 40.6%. Reuters reported in October 2025 that Sinochem was weighing a sale, and three directors (Zhang Haitao, Xi Xiaohong, Wang Kun) voted against Pirelli's H1 2026 report over its declaration of control by MTP S.p.A. So treat Pirelli as a valuable, non-controlled holding: Sinochem's exposure is its 34% stake, not the consolidated EUR 6.8bn of revenue.
 6. **Natural rubber is no longer in the picture.** Sinochem International's natural-rubber segment went from RMB 18.1bn of revenue (2022) to RMB 1.1bn (2023) and nil (2024–25). It agreed in November 2022 to sell 36% of Halcyon Agri to Hainan Rubber; I did not verify completion or Sinochem's remaining stake. Hainan Rubber's profile (EBITDA margin 2.3%, 12.2x leverage) shows how thin natural-rubber economics are, which fits Sinochem International's stated 2022 aim of refocusing on materials science.
 
-## 6. Cross-sector read and what to watch
+## 7. Cross-sector read and what to watch
 
 | | Energy | Agriculture | Rubber |
 |---|---|---|---|
@@ -154,7 +188,7 @@ Two structural facts shape the framing. Agriculture and rubber/tyres sit in the 
 | Earnings quality | Working-capital and fair-value support | Litigation and restructuring noise | Clean |
 | Main watch item | Quanzhou run rates and margins, refinancing, capex | Litigation resolution, ADAMA's cost programme, Syngenta deleveraging | Pirelli control or stake sale, margin squeeze at Chinese tyre makers |
 
-## 7. Method, data and limits
+## 8. Method, data and limits
 
 - **Same definitions for every company.** EBITDA = EBIT + D&A with no add-back for impairments, restructuring or litigation (so it differs from company "adjusted EBITDA"). Debt includes leases (US GAAP filers exclude operating leases). ROE/ROA use average equity/assets. Full definitions are in the workbook README.
 - **Entity-level, not group-level.** Sinochem Energy and Syngenta AG are unlisted and compared on their filed statements; Syngenta Group's consolidated net income and balance sheet are not published.
@@ -164,6 +198,6 @@ Two structural facts shape the framing. Agriculture and rubber/tyres sit in the 
 
 ## Files
 
-- `Sinochem_Peer_Comparison.xlsx`: Scorecard, sector matrices, H1 2026 momentum, group context, inputs, FX, sources
+- `Sinochem_Peer_Comparison.xlsx`: Position (editable one-glance tables), Scorecard, sector matrices, H1 2026 momentum, group context, inputs, FX, sources
 - `charts/`: one positioning chart per sector
 - `scripts/` and `data/`: fetch, standardise and rebuild (`scripts/run_all.sh`); raw statements in `data/raw`

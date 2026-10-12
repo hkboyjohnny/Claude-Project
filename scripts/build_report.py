@@ -8,5 +8,6 @@ t = (ROOT / "report_src" / "report_template.md").read_text()
 for sec in ("Energy", "Agriculture", "Rubber"):
     t = t.replace(f"<!--TABLE:{sec}-->", rt.table(sec, rt.STATS[sec]))
 t = t.replace("<!--SCORECARD-->", rt.scorecard_summary())
+t = t.replace("<!--POSITION-->", rt.position_tables())
 (ROOT / "Sinochem_Peer_Comparison_Report.md").write_text(t)
 print("report written", len(t.split()), "words")
