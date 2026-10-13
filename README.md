@@ -14,3 +14,7 @@ Peer comparison of Sinochem Holdings' Energy, Agriculture and Rubber businesses 
 Rebuild: `scripts/run_all.sh`, then `python3 scripts/build_report.py`. Needs Python 3 with `openpyxl` and `matplotlib`, and LibreOffice for formula recalculation.
 
 Sinochem Holdings is unlisted and publishes no sector P&L, so each sector is anchored on group entities with filed statements (Sinochem Energy; Syngenta AG, ADAMA, Yangnong, Sinofert; Pirelli, Aeolus Tyre). See the report's method section for definitions and limits.
+
+## COFCO analysis
+
+`COFCO_Analysis/`: comprehensive COFCO corporate analysis (grains and oilseeds, pork, dairy) with peer comparisons, charts, a data workbook and source documents. Start with `COFCO_Analysis/COFCO_Comprehensive_Analysis.md`.
